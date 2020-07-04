@@ -1,9 +1,56 @@
 version: 2.1
+aliases:
+  - &defaults
+      docker:
+        - image: circleci/openjdk:8-jdk
+  - &build_demo
+    build_demo:
+      <<: *defaults
+      steps:
+        - run:
+            name: Cloning
+            command: git clone https://$bitbucket_username:$bitbucket_password@bitbucket.org/maisamm77/demo.git
+        - run:
+            name: Saving HEAD checksum
+            command: cd principal && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
+        - restore_cache:
+            name: "Retrieving cached dependencies"
+            keys:
+              - m2-demo-{{ checksum "principal/demo/pom.xml" }}
+        - restore_cache:
+            name: "Retrieving cached JAR"
+            keys:
+              - art-v2-shared-common-{{ checksum "/tmp/head_checksum" }}
+        - run:
+            name: Building Demo
+            command: |
+              cd principal/demo;
+              if [[ -f "target/demo.jar" ]]; then
+                  echo Jar already exists, skipping build
+              else
+                mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
+              fi
+        - save_cache:
+            name: "Caching dependencies"
+            paths:
+              - ~/.m2
+            key: m2-demo-{{ checksum "principal/demo/pom.xml" }}
+        - save_cache:
+            name: "Caching JAR"
+            paths:
+              - ~/project/principal/demo/target
+            key: art-v2-demo-{{ checksum "/tmp/head_checksum" }}
+        - persist_to_workspace:
+            root: principal/
+            paths:
+              - demo/pom.xml
+              - demo/target/SharedCommon.jar
 
 orbs:
   maven: circleci/maven@0.0.12
 
 workflows:
-  maven_test:
+  version: 2
+  build:
     jobs:
-      - maven/test # checkout, build, test, and upload test results
+      - build_demo
