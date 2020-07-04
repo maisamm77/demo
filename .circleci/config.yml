@@ -9,7 +9,7 @@ jobs:
       steps:
         - run:
             name: Cloning
-            command: git clone https://$bitbucket_username:$bitbucket_password@bitbucket.org/maisamm77/demo.git
+            command: git clone https://github.com/maisamm77/demo.git principal
         - run:
             name: Saving HEAD checksum
             command: cd principal && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
