@@ -16,7 +16,7 @@ jobs:
         - run:
             name: Building Demo
             command: |
-              cd principal/demo;
+              cd principal/;
                 mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
         - save_cache:
             name: "Caching dependencies"
