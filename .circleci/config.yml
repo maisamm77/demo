@@ -18,11 +18,6 @@ jobs:
             command: |
               cd principal/;
                 mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
-        - persist_to_workspace:
-            root: principal/
-            paths:
-              - demo/pom.xml
-              - demo/target/demo.jar
 
 orbs:
   maven: circleci/maven@0.0.12
