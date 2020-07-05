@@ -13,23 +13,11 @@ jobs:
         - run:
             name: Saving HEAD checksum
             command: cd principal && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
-        - restore_cache:
-            name: "Retrieving cached dependencies"
-            keys:
-              - m2-demo-{{ checksum "principal/demo/pom.xml" }}
-        - restore_cache:
-            name: "Retrieving cached JAR"
-            keys:
-              - art-v2-demo-{{ checksum "/tmp/head_checksum" }}
         - run:
             name: Building Demo
             command: |
               cd principal/demo;
-              if [[ -f "target/demo.jar" ]]; then
-                  echo Jar already exists, skipping build
-              else
                 mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
-              fi
         - save_cache:
             name: "Caching dependencies"
             paths:
