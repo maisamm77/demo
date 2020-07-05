@@ -20,7 +20,7 @@ jobs:
         - restore_cache:
             name: "Retrieving cached JAR"
             keys:
-              - art-v2-shared-common-{{ checksum "/tmp/head_checksum" }}
+              - art-v2-demo-{{ checksum "/tmp/head_checksum" }}
         - run:
             name: Building Demo
             command: |
@@ -44,7 +44,7 @@ jobs:
             root: principal/
             paths:
               - demo/pom.xml
-              - demo/target/SharedCommon.jar
+              - demo/target/demo.jar
 
 orbs:
   maven: circleci/maven@0.0.12
