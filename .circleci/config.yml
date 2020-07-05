@@ -18,16 +18,6 @@ jobs:
             command: |
               cd principal/;
                 mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
-        - save_cache:
-            name: "Caching dependencies"
-            paths:
-              - ~/.m2
-            key: m2-demo-{{ checksum "principal/demo/pom.xml" }}
-        - save_cache:
-            name: "Caching JAR"
-            paths:
-              - ~/project/principal/demo/target
-            key: art-v2-demo-{{ checksum "/tmp/head_checksum" }}
         - persist_to_workspace:
             root: principal/
             paths:
