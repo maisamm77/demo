@@ -7,26 +7,24 @@ jobs:
     build_demo:
       <<: *defaults
       steps:
-        - run:
-            name: Cloning
-            command: git clone https://github.com/maisamm77/demo.git principal
+        - checkout
         - run:
             name: Saving HEAD checksum
-            command: cd principal && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
+            command: cd project && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
         - restore_cache:
             name: "Retrieving cached dependencies"
             keys:
-              - m2-demo-{{ checksum "principal/pom.xml" }}
+              - m2-demo-{{ checksum "project/pom.xml" }}
         - run:
             name: Building Demo
             command: |
-              cd principal/;
+              cd project/;
                 mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
         - save_cache:
             name: "Caching dependencies"
             paths:
               - ~/.m2
-            key: m2-demo-{{ checksum "principal/pom.xml" }}
+            key: m2-demo-{{ checksum "project/pom.xml" }}
 
 orbs:
   maven: circleci/maven@0.0.12

@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private CustomAuthentication customAuthentication;
+
 	// Protecting the urls with a role-based access.
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -22,8 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// auth.authenticationProvider(new CustomAuthenticationProvider());
-		auth.userDetailsService(new CustomUserDetailsService());
+		auth.authenticationProvider(customAuthentication);
 	}
 
 }

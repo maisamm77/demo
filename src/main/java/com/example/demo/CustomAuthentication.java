@@ -4,9 +4,11 @@ import com.example.demo.model.User;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class CustomAuthentication implements AuthenticationProvider {
 	List<User> dummyUsers = new ArrayList<>();
 
