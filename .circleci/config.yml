@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 aliases:
   - &defaults
       docker:
@@ -10,7 +10,7 @@ jobs:
         - checkout
         - run:
             name: Saving HEAD checksum
-            command: cd project && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
+            command: cd demo && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
         - restore_cache:
             name: "Retrieving cached dependencies"
             keys:
