@@ -8,14 +8,12 @@ jobs:
       <<: *defaults
       steps:
         - checkout
-        - run: pwd 
-        - run:
-            name: Saving HEAD checksum
-            command: cd project && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
+        - run: pwd
         - restore_cache:
             name: "Retrieving cached dependencies"
             keys:
               - m2-demo-{{ checksum "project/pom.xml" }}
+        - run: pwd
         - run:
             name: Building Demo
             command: |
