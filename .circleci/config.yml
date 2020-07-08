@@ -8,22 +8,20 @@ jobs:
       <<: *defaults
       steps:
         - checkout
-        - run: pwd
         - restore_cache:
             name: "Retrieving cached dependencies"
             keys:
-              - m2-demo-{{ checksum "project/pom.xml" }}
+              - m2-demo-{{ checksum "pom.xml" }}
         - run: pwd
         - run:
             name: Building Demo
             command: |
-              cd project/;
                 mvn clean package -DskipTests dependency:resolve-plugins dependency:go-offline
         - save_cache:
             name: "Caching dependencies"
             paths:
               - ~/.m2
-            key: m2-demo-{{ checksum "project/pom.xml" }}
+            key: m2-demo-{{ checksum "pom.xml" }}
 
 orbs:
   maven: circleci/maven@0.0.12
