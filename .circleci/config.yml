@@ -8,7 +8,7 @@ jobs:
       <<: *defaults
       steps:
         - checkout
-        - run: pwd
+        - run: pwd 
         - run:
             name: Saving HEAD checksum
             command: cd project && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
