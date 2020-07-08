@@ -8,9 +8,10 @@ jobs:
       <<: *defaults
       steps:
         - checkout
+        - ls
         - run:
             name: Saving HEAD checksum
-            command: cd demo && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
+            command: cd project && echo "$(git rev-parse HEAD)" > /tmp/head_checksum
         - restore_cache:
             name: "Retrieving cached dependencies"
             keys:
