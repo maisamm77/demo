@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <mysql.connector.j>5.1.18</mysql.connector.j>
+        <mysql.connector.j>8.0.28</mysql.connector.j>
         <java.version>1.8</java.version>
     </properties>
 
